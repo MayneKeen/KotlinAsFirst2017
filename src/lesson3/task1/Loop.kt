@@ -293,7 +293,7 @@ fun squareSequenceDigit(n: Int): Int {
 fun fibSequenceDigit(n: Int): Int {
     var s = ""
     var result = 0
-    for (i in 1..50) {
+    for (i in 1..40) {
         s+=(fib(i)).toString()
     }
     result = (s[n-1]).toInt()-48
