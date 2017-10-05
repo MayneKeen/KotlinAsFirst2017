@@ -274,15 +274,26 @@ fun hasDifferentDigits(n: Int): Boolean {
  * Например, 2-я цифра равна 4, 7-я 5, 12-я 6.
  */
 fun squareSequenceDigit(n: Int): Int {
-    var s = "149162536496481100121144169196225256289"
-    var result = 0
-    for (i in 18..30) {
-        s+=(i*i).toString()
+    var a=0
+    var b=0
+    var i=1
+    while (b<n){
+        a=i*i
+        while (a>0){
+            a/=10
+            b++
+        }
+        a=i*i
+        i++
     }
-    result = (s[n-1]).toInt()-48
-    return result
+    val m=b-n
+    if (b>n) {
+        for (j in 1..m) {
+            a/=10
+        }
+    }
+    return a%10
 }
-
 /**
  * Сложная
  *
