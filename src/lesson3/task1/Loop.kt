@@ -286,9 +286,9 @@ fun squareSequenceDigit(n: Int): Int {
         a=i*i
         i++
     }
-    val m=b-n
+    val k=b-n
     if (b>n) {
-        for (j in 1..m) {
+        for (j in 1..k) {
             a/=10
         }
     }
