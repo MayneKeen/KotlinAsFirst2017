@@ -70,7 +70,7 @@ fun digitNumber(n: Int): Int {
         return 1
     }
     else {
-        while (b>0) {
+        while (b!=0) {
             b/=10
             a++
         }
@@ -293,7 +293,7 @@ fun squareSequenceDigit(n: Int): Int {
 fun fibSequenceDigit(n: Int): Int {
     var s = ""
     var result = 0
-    for (i in 1..30) {
+    for (i in 1..50) {
         s+=(fib(i)).toString()
     }
     result = (s[n-1]).toInt()-48
