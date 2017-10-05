@@ -2,6 +2,8 @@
 package lesson4.task1
 
 import lesson1.task1.discriminant
+import lesson1.task1.sqr
+
 
 /**
  * Пример
@@ -106,14 +108,26 @@ fun buildSumExample(list: List<Int>) = list.joinToString(separator = " + ", post
  * по формуле abs = sqrt(a1^2 + a2^2 + ... + aN^2).
  * Модуль пустого вектора считать равным 0.0.
  */
-fun abs(v: List<Double>): Double = TODO()
+fun abs(v: List<Double>): Double {
+    var result = 0.0
+    for (element in v) {
+        result += sqr(element)
+    }
+    return Math.sqrt(result)
+}
 
 /**
  * Простая
  *
  * Рассчитать среднее арифметическое элементов списка list. Вернуть 0.0, если список пуст
  */
-fun mean(list: List<Double>): Double = TODO()
+fun mean(list: List<Double>): Double {
+    var result = 0.0
+    for(element in list) {
+        result += element
+    }
+    return if(result==0.0) result else ((result)/list.size)
+}
 
 /**
  * Средняя
@@ -123,7 +137,18 @@ fun mean(list: List<Double>): Double = TODO()
  *
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
-fun center(list: MutableList<Double>): MutableList<Double> = TODO()
+fun center(list: MutableList<Double>): MutableList<Double> {
+    var mean = mean(list)
+    return if( list.isEmpty() ) list
+    else {
+        for (i in 0..list.size-1) {
+            list[i] -= mean
+        }
+        return list
+    }
+
+
+}
 
 /**
  * Средняя
@@ -154,7 +179,15 @@ fun polynom(p: List<Double>, x: Double): Double = TODO()
  *
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
-fun accumulate(list: MutableList<Double>): MutableList<Double> = TODO()
+fun accumulate(list: MutableList<Double>): MutableList<Double> {
+    var s = 0.0
+    for(i in list.size-2 downTo 0) s+=list[i]
+    for (i in list.size-1 downTo 1) {
+        list[i] = s/i
+        s -= list[i-1]
+    }
+    return list
+}
 
 /**
  * Средняя
