@@ -276,7 +276,7 @@ fun hasDifferentDigits(n: Int): Boolean {
 fun squareSequenceDigit(n: Int): Int {
     var s = "149162536496481100121144169196225256289"
     var result = 0
-    for (i in 1..30) {
+    for (i in 18..30) {
         s+=(i*i).toString()
     }
     result = (s[n-1]).toInt()-48
