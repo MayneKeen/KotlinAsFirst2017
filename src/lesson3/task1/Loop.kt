@@ -187,6 +187,7 @@ fun squareBetweenExists(m: Int, n: Int): Boolean {
             a+=1.0
             if( (Math.sqrt(a)%1.0) == 0.0) {
                 result = true
+                break
             }
         }
         result
@@ -260,6 +261,7 @@ fun hasDifferentDigits(n: Int): Boolean {
             }
             else {
                 result = true
+                break
             }
         }
         result
