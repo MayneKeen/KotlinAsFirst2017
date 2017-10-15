@@ -112,17 +112,11 @@ fun ageDescription(age: Int): String = when {
      * прямоугольным (вернуть 1) или тупоугольным (вернуть 2).
      * Если такой треугольник не существует, вернуть -1.
      */
-    fun triangleKind(a: Double, b: Double, c: Double): Int {
-        return if ( (a > (b + c)) || (b > (a + c)) || (c > (b + a)) ) {
-            -1
-        } else {
-            if ( (a * a > (b * b + c * c)) || (b * b > (a * a + c * c)) || (c * c > (b * b + a * a)) ) {
-                2
-            } else {
-                if ( (a * a == (b * b + c * c)) || (b * b == (a * a + c * c)) || (c * c == (a * a + b * b)) ) 1
-                else 0
-            }
-        }
+    fun triangleKind(a: Double, b: Double, c: Double): Int = when {
+        ((a > (b + c)) || (b > (a + c)) || (c > (b + a))) -> -1
+        ((a*a > (b*b + c*c)) || (b*b > (a*a + c*c)) || (c*c > (b*b + a*a))) -> 2
+        ((a*a == (b*b + c*c)) || (b*b == (a*a + c*c)) || (c*c == (a*a + b*b))) -> 1
+        else -> 0
     }
     /**
      * Средняя
@@ -133,42 +127,17 @@ fun ageDescription(age: Int): String = when {
      * Если пересечения нет, вернуть -1.
      */
     fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
-        var result = -1
+        var n = a in c..d
+        var m = c in a..b
 
+        return when {
+            n && (b in c..d) -> b-a
+            m && (d in a..b) -> d-c
+            m && (d > b) -> b - c
+            n && (b > d) -> d - a
+            (((a == b) && (b == c) && (c == d))  ||  ((a in c..b) && (d == a)) ||  ((c in a..d) && (b == c))) -> 0
 
-
-        if ((d < a) || (b < c)) {
-            return result
-        } else {
-            if (((a == b) && (a == c)) || ((a == b) && (a == d)) || ((a == c) && (a == d)) || ((b == c) && (b == d))) {
-                result = 0
-            }
-
-            if (((a == b) && (c != d) && (c < a) && (d > a)) || ((c == d) && (a < c) && (b > c))) {
-                result = 0
-            }
-
-            if (((a == d) && (b > a) && (c < d)) || ((b == c) && (d > c) && (a < b))) {
-                result = 0
-            }
-
-            if ((c < a) && (a < d)) {
-                if (b > d) {
-                    result = (d - a)
-                }
-                if (b <= d) {
-                    result = (b - a)
-                }
-            } else if ((a < c) && (c < b)) {
-                if (b < d) {
-                    result = (b - c)
-                }
-                if (b >= d) {
-                    result = (d - c)
-                }
-            }
-
-            return result
+            else -> -1
         }
     }
 

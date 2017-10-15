@@ -66,15 +66,14 @@ fun digitNumber(n: Int): Int {
     var a = 0
     var b = n
 
-    if(n==0) {
-        return 1
-    }
-    else {
+    return if(n==0) {
+        1
+    } else {
         while (b!=0) {
             b/=10
             a++
         }
-        return a
+        a
     }
 
 }
@@ -86,14 +85,17 @@ fun digitNumber(n: Int): Int {
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
 fun fib(n: Int): Int {
-    var result = 1
-    if (n==1 || n==2) {
-        return result
+    var fib1 = 1
+    var fib2 = 1
+    var i = 2
+    var fibSum=2
+    while (i<n) {
+        fibSum = fib2 + fib1
+        fib1 = fib2
+        fib2 = fibSum
+        i++
     }
-    else {
-        result = fib(n-1) + fib(n-2)
-        return result
-    }
+    return fibSum
 }
 
 /**
@@ -106,18 +108,10 @@ fun lcm(m: Int, n: Int): Int {
 
     var a = m
     var b = n
-    var c = m*n
-    do {
-        if (a>b) {
-            a -= b
-        }
-        else {
-            b -= a
-        }
-
-    } while (a!=b && a>0 && b>0)
-    c = c/a
-    return c
+    while ((a != 0) && (b != 0)) {
+        if (a >= b) a %= b else b %= a
+    }
+    return (a + b)
 }
 
 /**
@@ -267,6 +261,7 @@ fun hasDifferentDigits(n: Int): Boolean {
         result
     }
 }
+
 
 /**
  * Сложная
