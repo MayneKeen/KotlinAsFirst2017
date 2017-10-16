@@ -50,15 +50,19 @@ fun ageDescription(age: Int): String = when {
     fun timeForHalfWay(t1: Double, v1: Double,
                        t2: Double, v2: Double,
                        t3: Double, v3: Double): Double {
-        val s = (t1*v1 + t2*v2 + t3*v3)
-
-        return when {
-            t1*v1 > s/2 -> (s/2)/v1
-            (t1*v1 + t2*v2) > s/2 -> t1 + (s/2 - t1*v1)/v2
-            else -> t1 + t2 + (s/2 - t1*v1 - t2*v2)/v3
+        var s1 = v1*t1
+        val s2 = v2*t2
+        val s3 = v3*t3
+        val halfS = (1.0*(s1+s2+s3))/2
+        return when{
+            halfS < s1 -> halfS/v1
+            halfS == s1 -> t1
+            (halfS == (s1 + s2)) -> (t1 + t2)
+            ((halfS > s1) && (halfS < s1 + s2)) -> (t1 + (halfS - s1)/v2)
+            else -> (t1 + t2 + (halfS - s1 - s2)/v3)
         }
-
     }
+
 
     /**
      * Простая
@@ -96,7 +100,8 @@ fun ageDescription(age: Int): String = when {
         var result = 0
         when {
             (kingX == rookX || kingY == rookY) -> result = 1
-            (((kingX - bishopX) == (kingY - bishopY) || (kingX - bishopX) == (bishopY - kingY)) && (result == 1))
+            (((kingX - bishopX) == (kingY - bishopY) || (kingX - bishopX) == (bishopY - kingY)) &&
+                    ((kingX == rookX || kingY == rookY)))
             -> result = 3
 
             else -> if ((kingX-bishopX) == (kingY-bishopY) || (kingX-bishopX) == (bishopY-kingY))  result = 2
