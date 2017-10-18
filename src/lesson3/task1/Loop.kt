@@ -111,10 +111,10 @@ fun lcm(m: Int, n: Int): Int {
 
     var a = m
     var b = n
-    while ((a != 0) && (b != 0)) {
-        if (a >= b) a %= b else b %= a
+    while (a!=b) {
+        if (a>b) b+=n else a+=m
     }
-    return (a + b)
+    return a
 }
 
 /**
@@ -123,11 +123,17 @@ fun lcm(m: Int, n: Int): Int {
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
 fun minDivisor(n: Int): Int {
-    var i = 2
-    while ((n%i)>0) {
-        i++
+    return if(isPrime(n)) n
+    else {
+        var result = 0
+        for (i in 2..n/2) {
+            if (n%i == 0) {
+                result = i
+                break
+            }
+        }
+        result
     }
-    return i
 }
 
 
@@ -137,11 +143,16 @@ fun minDivisor(n: Int): Int {
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
 fun maxDivisor(n: Int): Int {
-    var k = n-1
-    while (n%k>0) {
-        k--
-    }
-    return k
+
+        var result = 0
+        for (i in n/2 downTo 1) {
+            if (n%i == 0) {
+                result = i
+                break
+            }
+        }
+        return result
+
 }
 
 /**
@@ -159,10 +170,10 @@ fun isCoPrime(m: Int, n: Int): Boolean {
             a%=b
         }
         else {
-            b %= a
+            b%=a
         }
     }
-    return (a+b)==1
+    return (a + b)==1
 }
 
 /**
@@ -198,7 +209,23 @@ fun squareBetweenExists(m: Int, n: Int): Boolean {
  * sin(x) = x - x^3 / 3! + x^5 / 5! - x^7 / 7! + ...
  * Нужную точность считать достигнутой, если очередной член ряда меньше eps по модулю
  */
-fun sin(x: Double, eps: Double): Double = TODO()
+fun sin(x: Double, eps: Double): Double {
+    var m = x
+    while (Math.abs(m)>2*Math.PI){
+        if (m < 0) m+=2*Math.PI
+        else m-=2*Math.PI
+    }
+    var k = m
+    var l = m
+    var i = 0
+    while (Math.abs(l)>=eps){
+        i++
+        l= Math.pow(m,((2*i)+1).toDouble())/factorial(2*i+1)
+        if (i%2==1) k-=l
+        else k+=l
+    }
+    return k
+}
 
 /**
  * Средняя
@@ -207,7 +234,23 @@ fun sin(x: Double, eps: Double): Double = TODO()
  * cos(x) = 1 - x^2 / 2! + x^4 / 4! - x^6 / 6! + ...
  * Нужную точность считать достигнутой, если очередной член ряда меньше eps по модулю
  */
-fun cos(x: Double, eps: Double): Double = TODO()
+fun cos(x: Double, eps: Double): Double {
+    var m = 1.0
+    var n = m
+    var k = x
+    var i = 0
+    while (Math.abs(k)>2*Math.PI){
+        if (k < 0) k+=2*Math.PI
+        else k-=2*Math.PI
+    }
+    while (Math.abs(n)>=eps){
+        i++
+        n = Math.pow(k, 2*i.toDouble())/factorial(2*i)
+        if (i%2==1) m-=n
+        else m+=n
+    }
+    return m
+}
 
 /**
  * Средняя
@@ -242,12 +285,7 @@ fun isPalindrome(n: Int): Boolean = (revert(n) == n)
  */
 fun hasDifferentDigits(n: Int): Boolean {
     var b = n
-    var c = 0
-    while(b>0) {
-        b /= 10
-        c++
-    }
-    b = n
+    var c = digitNumber(n)
     var result = false
     return if(c == 0 || c==1) {
         result
@@ -274,19 +312,15 @@ fun hasDifferentDigits(n: Int): Boolean {
  * Например, 2-я цифра равна 4, 7-я 5, 12-я 6.
  */
 fun squareSequenceDigit(n: Int): Int {
-    var a=0
-    var b=0
-    var i=1
+    var a = 0
+    var b = 0
+    var i = 1
     while (b<n){
-        a=i*i
-        while (a>0){
-            a/=10
-            b++
-        }
-        a=i*i
+        a = i*i
+        b+=digitNumber(a)
         i++
     }
-    val k=b-n
+    val k = b - n
     if (b>n) {
         for (j in 1..k) {
             a/=10
@@ -302,11 +336,19 @@ fun squareSequenceDigit(n: Int): Int {
  * Например, 2-я цифра равна 1, 9-я 2, 14-я 5.
  */
 fun fibSequenceDigit(n: Int): Int {
-    var s = ""
-    var result = 0
-    for (i in 1..40) {
-        s+=(fib(i)).toString()
+    var a = 0
+    var b = 0
+    var i = 1
+    while (b<n){
+        a = fib(i)
+        b+=digitNumber(a)
+        i++
     }
-    result = (s[n-1]).toInt()-48
-    return result
+    val k = b - n
+    if (b>n) {
+        for (j in 1..k) {
+            a/=10
+        }
+    }
+    return a%10
 }
