@@ -35,8 +35,8 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  * вернуть строку вида: «21 год», «32 года», «12 лет».
  */
 fun ageDescription(age: Int): String = when {
-    (((age % 100) / 10 == 1) || (age % 10 == 0) || (age % 10 > 4)) -> "$age лет"
-    (age % 10 == 1) -> "$age год"
+    (age%100)/10 == 1 || age%10 == 0 || age%10 > 4 -> "$age лет"
+    age%10 == 1 -> "$age год"
     else -> "$age года"
 }
 
@@ -55,10 +55,10 @@ fun timeForHalfWay(t1: Double, v1: Double,
     val s3 = v3 * t3
     val halfS = (1.0 * (s1 + s2 + s3)) / 2
     return when {
-        halfS <= s1 -> halfS / v1
-        (halfS == (s1 + s2)) -> (t1 + t2)
-        (halfS < s1 + s2) -> (t1 + (halfS - s1) / v2)
-        else -> (t1 + t2 + (halfS - s1 - s2) / v3)
+        halfS <= s1 -> halfS/v1
+        halfS == s1 + s2 -> t1 + t2
+        halfS < s1 + s2 -> t1 + (halfS - s1)/v2
+        else -> t1 + t2 + (halfS - s1 - s2)/v3
     }
 }
 
@@ -76,9 +76,9 @@ fun whichRookThreatens(kingX: Int, kingY: Int,
                            rookX1: Int, rookY1: Int,
                            rookX2: Int, rookY2: Int): Int =
             when {
-                ((kingX == rookX1 || kingY == rookY1) && (kingX == rookX2 || kingY == rookY2)) -> 3
-                (kingX == rookX1 || kingY == rookY1) -> 1
-                (kingX == rookX2 || kingY == rookY2) -> 2
+                (kingX == rookX1 || kingY == rookY1) && (kingX == rookX2 || kingY == rookY2) -> 3
+                kingX == rookX1 || kingY == rookY1 -> 1
+                kingX == rookX2 || kingY == rookY2 -> 2
                 else -> 0
             }
 
@@ -96,10 +96,10 @@ fun whichRookThreatens(kingX: Int, kingY: Int,
 fun rookOrBishopThreatens(kingX: Int, kingY: Int,
                               rookX: Int, rookY: Int,
                               bishopX: Int, bishopY: Int): Int {
-    val a = (kingX==rookX)||(kingY==rookY)
+    val a = kingX==rookX || kingY==rookY
     val b = Math.abs(kingX-bishopX)==Math.abs(kingY-bishopY)
     return when {
-        a&&b -> 3
+        a && b -> 3
         a -> 1
         b -> 2
         else -> 0
@@ -116,8 +116,8 @@ fun rookOrBishopThreatens(kingX: Int, kingY: Int,
  */
 fun triangleKind(a: Double, b: Double, c: Double): Int = when {
     a > (b + c) || b > (a + c) || c > (b + a) -> -1
-    a * a > (b * b + c * c) || b * b > (a * a + c * c) || c * c > (b * b + a * a) -> 2
-    a * a == (b * b + c * c) || b * b == (a * a + c * c) || c * c == (a * a + b * b) -> 1
+    a*a > (b*b + c*c) || b*b > (a*a + c*c) || c*c > (b*b + a*a) -> 2
+    a*a == (b*b + c*c) || b*b == (a*a + c*c) || c*c == (a*a + b*b) -> 1
     else -> 0
 }
 /**
