@@ -50,7 +50,7 @@ fun ageDescription(age: Int): String = when {
 fun timeForHalfWay(t1: Double, v1: Double,
                        t2: Double, v2: Double,
                        t3: Double, v3: Double): Double {
-    var s1 = v1 * t1
+    val s1 = v1 * t1
     val s2 = v2 * t2
     val s3 = v3 * t3
     val halfS = (1.0 * (s1 + s2 + s3)) / 2
@@ -129,8 +129,8 @@ fun triangleKind(a: Double, b: Double, c: Double): Int = when {
  * Если пересечения нет, вернуть -1.
  */
 fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
-    var n = a in c..d
-    var m = c in a..b
+    val n = a in c..d
+    val m = c in a..b
 
     return when {
         n && (b in c..d) -> b - a
