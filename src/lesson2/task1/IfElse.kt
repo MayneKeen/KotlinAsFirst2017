@@ -115,9 +115,9 @@ fun rookOrBishopThreatens(kingX: Int, kingY: Int,
  * Если такой треугольник не существует, вернуть -1.
  */
 fun triangleKind(a: Double, b: Double, c: Double): Int = when {
-    ((a > (b + c)) || (b > (a + c)) || (c > (b + a))) -> -1
-    ((a * a > (b * b + c * c)) || (b * b > (a * a + c * c)) || (c * c > (b * b + a * a))) -> 2
-    ((a * a == (b * b + c * c)) || (b * b == (a * a + c * c)) || (c * c == (a * a + b * b))) -> 1
+    a > (b + c) || b > (a + c) || c > (b + a) -> -1
+    a * a > (b * b + c * c) || b * b > (a * a + c * c) || c * c > (b * b + a * a) -> 2
+    a * a == (b * b + c * c) || b * b == (a * a + c * c) || c * c == (a * a + b * b) -> 1
     else -> 0
 }
 /**
@@ -137,7 +137,7 @@ fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
         m && (d in a..b) -> d - c
         m && (d > b) -> b - c
         n && (b > d) -> d - a
-        (((a == b) && (b == c) && (c == d)) || ((a in c..b) && (d == a)) || ((c in a..d) && (b == c))) -> 0
+        ((a == b) && (b == c) && (c == d)) || ((a in c..b) && (d == a)) || ((c in a..d) && (b == c)) -> 0
 
         else -> -1
     }
