@@ -123,18 +123,17 @@ fun lcm(m: Int, n: Int): Int {
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
 fun minDivisor(n: Int): Int {
-    return if(isPrime(n)) n
-    else {
-        var result = 0
-        for (i in 2..n/2) {
-            if (n%i == 0) {
-                result = i
-                break
-            }
+    var result = n
+    for (i in 2..Math.sqrt(n.toDouble()).toInt()) {
+        if (n % i == 0) {
+            result = i
+            break
         }
-        result
     }
+    return result
 }
+
+
 
 
 /**
@@ -143,17 +142,12 @@ fun minDivisor(n: Int): Int {
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
 fun maxDivisor(n: Int): Int {
-
-        var result = 0
-        for (i in n/2 downTo 1) {
-            if (n%i == 0) {
-                result = i
-                break
-            }
-        }
-        return result
-
+    for (i in n / 2 downTo 1) {
+        if (n%i == 0) return i
+    }
+    return n
 }
+
 
 /**
  * Простая
@@ -173,7 +167,7 @@ fun isCoPrime(m: Int, n: Int): Boolean {
             b%=a
         }
     }
-    return (a + b)==1
+    return (a + b) == 1
 }
 
 /**
