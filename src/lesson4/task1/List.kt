@@ -211,7 +211,7 @@ fun factorize(n: Int): List<Int> {
         k/=x
         result.add(x)
     }
-    return result.sorted()
+    return result
 }
 
 /**
@@ -220,7 +220,17 @@ fun factorize(n: Int): List<Int> {
  * Разложить заданное натуральное число n > 1 на простые множители.
  * Результат разложения вернуть в виде строки, например 75 -> 3*5*5
  */
-fun factorizeToString(n: Int): String = TODO()
+fun factorizeToString(n: Int): String {
+    var result = ""
+    var k = n
+    while (k>1) {
+        var x = minDivisor(k)
+        k/=x
+        result += "$x*"
+    }
+    result = result.substring(0, result.length-1)
+    return result
+}
 
 /**
  * Средняя
@@ -248,7 +258,44 @@ fun convert(n: Int, base: Int): List<Int> {
  * строчными буквами: 10 -> a, 11 -> b, 12 -> c и так далее.
  * Например: n = 100, base = 4 -> 1210, n = 250, base = 14 -> 13c
  */
-fun convertToString(n: Int, base: Int): String = TODO()
+fun intToStr(a: Int): String = when (a) {
+        10 -> "a"
+        11 -> "b"
+        12 -> "c"
+        13 -> "d"
+        14 -> "e"
+        15 -> "f"
+        16 -> "g"
+        17 -> "h"
+        18 -> "i"
+        19 -> "j"
+        20 -> "k"
+        21 -> "l"
+        22 -> "m"
+        23 -> "n"
+        24 -> "o"
+        25 -> "p"
+        26 -> "q"
+        27 -> "r"
+        28 -> "s"
+        29 -> "t"
+        30 -> "u"
+        31 -> "v"
+        32 -> "w"
+        33 -> "x"
+        34 -> "y"
+        35 -> "z"
+        else -> a.toString()
+    }
+fun convertToString(n: Int, base: Int): String {
+    var list = convert(n, base)
+    var result = ""
+    for (element in list) {
+        result += intToStr(element)
+    }
+    result = result.substring(0,result.length)
+    return result
+}
 
 /**
  * Средняя
@@ -274,7 +321,43 @@ fun decimal(digits: List<Int>, base: Int): Int {
  * 10 -> a, 11 -> b, 12 -> c и так далее.
  * Например: str = "13c", base = 14 -> 250
  */
-fun decimalFromString(str: String, base: Int): Int = TODO()
+fun charToInt(a: Char): Int = when (a) {
+    'a' -> 10
+    'b' -> 11
+    'c' -> 12
+    'd' -> 13
+    'e' -> 14
+    'f' -> 15
+    'g' -> 16
+    'h' -> 17
+    'i' -> 18
+    'j' -> 19
+    'k' -> 20
+    'l' -> 21
+    'm' -> 22
+    'n' -> 23
+    'o' -> 24
+    'p' -> 25
+    'q' -> 26
+    'r' -> 27
+    's' -> 28
+    't' -> 29
+    'u' -> 30
+    'v' -> 31
+    'w' -> 32
+    'x' -> 33
+    'y' -> 34
+    'z' -> 35
+    else -> a.toInt()-48
+}
+fun decimalFromString(str: String, base: Int): Int {
+    var result = 0
+    for ((j, i) in (0 until str.length).withIndex()) {
+        val temp = charToInt(str[i])
+        result += temp*Math.pow(base.toDouble(), str.length-1-j.toDouble()).toInt()
+    }
+    return result
+}
 
 /**
  * Сложная
