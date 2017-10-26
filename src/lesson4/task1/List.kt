@@ -389,52 +389,54 @@ fun roman(n: Int): String {
  * Например, 375 = "триста семьдесят пять",
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
+fun addWithSpace(a: String, b:String): String = if (a.isNotEmpty()) (a + " " + b) else b
+
 fun units(n: Int): String {
     var result = ""
 
     when {
-        n/100==1 -> result += "сто "
-        n/100==2 -> result += "двести "
-        n/100==3 -> result += "триста "
-        n/100==4 -> result += "четыреста "
-        n/100==5 -> result += "пятьсот "
-        n/100==6 -> result += "шестьсот "
-        n/100==7 -> result += "семьсот "
-        n/100==8 -> result += "восемьсот "
-        n/100==9 -> result += "девятьсот "
+        n/100==1 -> result = addWithSpace(result, "сто")
+        n/100==2 -> result = addWithSpace(result, "двести")
+        n/100==3 -> result = addWithSpace(result, "триста")
+        n/100==4 -> result = addWithSpace(result, "четыреста")
+        n/100==5 -> result = addWithSpace(result, "пятьсот")
+        n/100==6 -> result = addWithSpace(result, "шестьсот")
+        n/100==7 -> result = addWithSpace(result, "семьсот")
+        n/100==8 -> result = addWithSpace(result, "восемьсот")
+        n/100==9 -> result = addWithSpace(result, "девятьсот")
     }
 
     when {
-        n/10%10==2 -> result += "двадцать "
-        n/10%10==3 -> result += "тридцать "
-        n/10%10==4 -> result += "сорок "
-        n/10%10==5 -> result += "пятьдесят "
-        n/10%10==6 -> result += "шестьдесят "
-        n/10%10==7 -> result += "семьдесят "
-        n/10%10==8 -> result += "восемьдесят "
-        n/10%10==9 -> result += "девяносто "
+        n/10%10==2 -> result = addWithSpace(result,"двадцать")
+        n/10%10==3 -> result = addWithSpace(result, "тридцать")
+        n/10%10==4 -> result = addWithSpace(result, "сорок")
+        n/10%10==5 -> result = addWithSpace(result, "пятьдесят")
+        n/10%10==6 -> result = addWithSpace(result, "шестьдесят")
+        n/10%10==7 -> result = addWithSpace(result, "семьдесят")
+        n/10%10==8 -> result = addWithSpace(result, "восемьдесят")
+        n/10%10==9 -> result = addWithSpace(result, "девяносто")
     }
 
     when {
-        n%100==11 -> result += "одиннадцать"
-        n%100==12 -> result += "двенадцать"
-        n%100==13 -> result += "тринадцать"
-        n%100==14 -> result += "четырнадцать"
-        n%100==15 -> result += "пятнадцать"
-        n%100==16 -> result += "шестнадцать"
-        n%100==17 -> result += "семнадцать"
-        n%100==18 -> result += "восемнадцать"
-        n%100==19 -> result += "девятнадцать"
+        n%100==11 -> result = addWithSpace(result, "одиннадцать")
+        n%100==12 -> result = addWithSpace(result, "двенадцать")
+        n%100==13 -> result = addWithSpace(result, "тринадцать")
+        n%100==14 -> result = addWithSpace(result, "четырнадцать")
+        n%100==15 -> result = addWithSpace(result, "пятнадцать")
+        n%100==16 -> result = addWithSpace(result, "шестнадцать")
+        n%100==17 -> result = addWithSpace(result, "семнадцать")
+        n%100==18 -> result = addWithSpace(result, "восемнадцать")
+        n%100==19 -> result = addWithSpace(result, "девятнадцать")
 
-        n%10==1 -> result += "один"
-        n%10==2 -> result += "два"
-        n%10==3 -> result += "три"
-        n%10==4 -> result += "четыре"
-        n%10==5 -> result += "пять"
-        n%10==6 -> result += "шесть"
-        n%10==7 -> result += "семь"
-        n%10==8 -> result += "восемь"
-        n%10==9 -> result += "девять"
+        n%10==1 -> result = addWithSpace(result, "один")
+        n%10==2 -> result = addWithSpace(result, "два")
+        n%10==3 -> result = addWithSpace(result, "три")
+        n%10==4 -> result = addWithSpace(result, "четыре")
+        n%10==5 -> result = addWithSpace(result, "пять")
+        n%10==6 -> result = addWithSpace(result, "шесть")
+        n%10==7 -> result = addWithSpace(result, "семь")
+        n%10==8 -> result = addWithSpace(result, "восемь")
+        n%10==9 -> result = addWithSpace(result, "девять")
     }
     return result
 }
@@ -442,58 +444,58 @@ fun units(n: Int): String {
 fun thousands(n: Int): String {
     var result = ""
     when {
-        n / 100 == 1 -> result += "сто "
-        n / 100 == 2 -> result += "двести "
-        n / 100 == 3 -> result += "триста "
-        n / 100 == 4 -> result += "четыреста "
-        n / 100 == 5 -> result += "пятьсот "
-        n / 100 == 6 -> result += "шестьсот "
-        n / 100 == 7 -> result += "семьсот "
-        n / 100 == 8 -> result += "восемьсот "
-        n / 100 == 9 -> result += "девятьсот "
+        n/100==1 -> result = addWithSpace(result, "сто")
+        n/100==2 -> result = addWithSpace(result, "двести")
+        n/100==3 -> result = addWithSpace(result, "триста")
+        n/100==4 -> result = addWithSpace(result, "четыреста")
+        n/100==5 -> result = addWithSpace(result, "пятьсот")
+        n/100==6 -> result = addWithSpace(result, "шестьсот")
+        n/100==7 -> result = addWithSpace(result, "семьсот")
+        n/100==8 -> result = addWithSpace(result, "восемьсот")
+        n/100==9 -> result = addWithSpace(result, "девятьсот")
     }
 
     when {
-        n / 10 % 10 == 2 -> result += "двадцать "
-        n / 10 % 10 == 3 -> result += "тридцать "
-        n / 10 % 10 == 4 -> result += "сорок "
-        n / 10 % 10 == 5 -> result += "пятьдесят "
-        n / 10 % 10 == 6 -> result += "шестьдесят "
-        n / 10 % 10 == 7 -> result += "семьдесят "
-        n / 10 % 10 == 8 -> result += "восемьдесят "
-        n / 10 % 10 == 9 -> result += "девяносто "
+        n/10%10==2 -> result = addWithSpace(result, "двадцать")
+        n/10%10==3 -> result = addWithSpace(result, "тридцать")
+        n/10%10==4 -> result = addWithSpace(result, "сорок")
+        n/10%10==5 -> result = addWithSpace(result, "пятьдесят")
+        n/10%10==6 -> result = addWithSpace(result, "шестьдесят")
+        n/10%10==7 -> result = addWithSpace(result, "семьдесят")
+        n/10%10==8 -> result = addWithSpace(result, "восемьдесят")
+        n/10%10==9 -> result = addWithSpace(result, "девяносто")
     }
 
     when {
-        n % 100 == 11 -> result += "одиннадцать "
-        n % 100 == 12 -> result += "двенадцать "
-        n % 100 == 13 -> result += "тринадцать "
-        n % 100 == 14 -> result += "четырнадцать "
-        n % 100 == 15 -> result += "пятнадцать "
-        n % 100 == 16 -> result += "шестнадцать "
-        n % 100 == 17 -> result += "семнадцать "
-        n % 100 == 18 -> result += "восемнадцать "
-        n % 100 == 19 -> result += "девятнадцать "
+        n%100==11 -> result = addWithSpace(result, "одиннадцать")
+        n%100==12 -> result = addWithSpace(result, "двенадцать")
+        n%100==13 -> result = addWithSpace(result, "тринадцать")
+        n%100==14 -> result = addWithSpace(result, "четырнадцать")
+        n%100==15 -> result = addWithSpace(result, "пятнадцать")
+        n%100==16 -> result = addWithSpace(result, "шестнадцать")
+        n%100==17 -> result = addWithSpace(result, "семнадцать")
+        n%100==18 -> result = addWithSpace(result, "восемнадцать")
+        n%100==19 -> result = addWithSpace(result, "девятнадцать")
 
-        n % 10 == 1 -> result += "одна "
-        n % 10 == 2 -> result += "две "
-        n % 10 == 3 -> result += "три "
-        n % 10 == 4 -> result += "четыре "
-        n % 10 == 5 -> result += "пять "
-        n % 10 == 6 -> result += "шесть "
-        n % 10 == 7 -> result += "семь "
-        n % 10 == 8 -> result += "восемь "
-        n % 10 == 9 -> result += "девять "
+        n%10==1 -> result = addWithSpace(result, "одна")
+        n%10==2 -> result = addWithSpace(result, "две")
+        n%10==3 -> result = addWithSpace(result, "три")
+        n%10==4 -> result = addWithSpace(result, "четыре")
+        n%10==5 -> result = addWithSpace(result, "пять")
+        n%10==6 -> result = addWithSpace(result, "шесть")
+        n%10==7 -> result = addWithSpace(result, "семь")
+        n%10==8 -> result = addWithSpace(result, "восемь")
+        n%10==9 -> result = addWithSpace(result, "девять")
     }
 
     return if (n/10%10 != 1) {
         when {
-            n%10 == 1 -> result + "тысяча"
-            n%10 in 2..4 -> result + "тысячи"
-            else -> result + "тысяч"
+            n%10 == 1 -> addWithSpace(result, "тысяча")
+            n%10 in 2..4 -> addWithSpace(result, "тысячи")
+            else -> addWithSpace(result, "тысяч")
         }
     } else {
-        result + "тысяч"
+        addWithSpace(result, "тысяч")
     }
 
 }
