@@ -3,7 +3,9 @@ package lesson4.task1
 
 import lesson1.task1.discriminant
 import lesson1.task1.sqr
+import lesson3.task1.isPrime
 import lesson3.task1.minDivisor
+import lesson3.task1.maxDivisor
 
 
 /**
@@ -188,11 +190,12 @@ fun polynom(p: List<Double>, x: Double): Double {
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
 fun accumulate(list: MutableList<Double>): MutableList<Double> {
-    if(list.isNotEmpty()) {
-        for(i in list.size-1 downTo 1) {
-            list[i] = list.subList(0, i+1).sum()
+        if (list.size > 1) {
+            list[1] += list[0]
+            for (i in 2 until list.size) {
+                list[i] += list[i - 1]
+            }
         }
-    }
     return list
 }
 
@@ -203,15 +206,22 @@ fun accumulate(list: MutableList<Double>): MutableList<Double> {
  * Результат разложения вернуть в виде списка множителей, например 75 -> (3, 5, 5).
  * Множители в списке должны располагаться по возрастанию.
  */
+fun maxPrimeDiv(a: Int): Int {
+    for (i in a/2 + 1 downTo 1) {
+        if ((a%i == 0) && (isPrime(i))) return i
+    }
+    return a
+}
+
 fun factorize(n: Int): List<Int> {
     var k = n
     var result = mutableListOf<Int>()
     while (k>1) {
-        var x = minDivisor(k)
+        var x = maxPrimeDiv(k)
         k/=x
         result.add(x)
     }
-    return result
+    return result.reversed()
 }
 
 /**
@@ -221,15 +231,8 @@ fun factorize(n: Int): List<Int> {
  * Результат разложения вернуть в виде строки, например 75 -> 3*5*5
  */
 fun factorizeToString(n: Int): String {
-    var result = ""
-    var k = n
-    while (k>1) {
-        var x = minDivisor(k)
-        k/=x
-        result += "$x*"
-    }
-    result = result.substring(0, result.length-1)
-    return result
+    var result = factorize(n)
+    return result.joinToString("*")
 }
 
 /**
@@ -258,35 +261,16 @@ fun convert(n: Int, base: Int): List<Int> {
  * строчными буквами: 10 -> a, 11 -> b, 12 -> c и так далее.
  * Например: n = 100, base = 4 -> 1210, n = 250, base = 14 -> 13c
  */
-fun intToStr(a: Int): String = when (a) {
-        10 -> "a"
-        11 -> "b"
-        12 -> "c"
-        13 -> "d"
-        14 -> "e"
-        15 -> "f"
-        16 -> "g"
-        17 -> "h"
-        18 -> "i"
-        19 -> "j"
-        20 -> "k"
-        21 -> "l"
-        22 -> "m"
-        23 -> "n"
-        24 -> "o"
-        25 -> "p"
-        26 -> "q"
-        27 -> "r"
-        28 -> "s"
-        29 -> "t"
-        30 -> "u"
-        31 -> "v"
-        32 -> "w"
-        33 -> "x"
-        34 -> "y"
-        35 -> "z"
-        else -> a.toString()
-    }
+fun intToStr(a: Int): String {
+    var m = 'a'
+    var result = ""
+    if (a in 10..35) {
+        for (i in 10 until a) m += 1
+        result += m.toString()
+    } else result = a.toString()
+    return result
+}
+
 fun convertToString(n: Int, base: Int): String {
     var list = convert(n, base)
     var result = ""
@@ -321,34 +305,15 @@ fun decimal(digits: List<Int>, base: Int): Int {
  * 10 -> a, 11 -> b, 12 -> c и так далее.
  * Например: str = "13c", base = 14 -> 250
  */
-fun charToInt(a: Char): Int = when (a) {
-    'a' -> 10
-    'b' -> 11
-    'c' -> 12
-    'd' -> 13
-    'e' -> 14
-    'f' -> 15
-    'g' -> 16
-    'h' -> 17
-    'i' -> 18
-    'j' -> 19
-    'k' -> 20
-    'l' -> 21
-    'm' -> 22
-    'n' -> 23
-    'o' -> 24
-    'p' -> 25
-    'q' -> 26
-    'r' -> 27
-    's' -> 28
-    't' -> 29
-    'u' -> 30
-    'v' -> 31
-    'w' -> 32
-    'x' -> 33
-    'y' -> 34
-    'z' -> 35
-    else -> a.toInt()-48
+fun charToInt(a: Char): Int {
+    var m = 9
+    var result = a.toInt()-48
+    if (a in 'a'..'z') {
+        for (i in 10..a.toInt()-87) m++
+        result = m
+        return result
+    }
+    else return result
 }
 fun decimalFromString(str: String, base: Int): Int {
     var result = 0
