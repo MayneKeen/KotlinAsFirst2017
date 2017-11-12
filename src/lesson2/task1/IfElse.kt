@@ -56,8 +56,7 @@ fun timeForHalfWay(t1: Double, v1: Double,
     val halfS = (1.0 * (s1 + s2 + s3)) / 2
     return when {
         halfS <= s1 -> halfS/v1
-        halfS == s1 + s2 -> t1 + t2
-        halfS < s1 + s2 -> t1 + (halfS - s1)/v2
+        halfS <= s1 + s2 -> t1 + (halfS - s1)/v2
         else -> t1 + t2 + (halfS - s1 - s2)/v3
     }
 }
@@ -137,7 +136,6 @@ fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
         m && (d in a..b) -> d - c
         m && (d > b) -> b - c
         n && (b > d) -> d - a
-        ((a == b) && (b == c) && (c == d)) || ((a in c..b) && (d == a)) || ((c in a..d) && (b == c)) -> 0
 
         else -> -1
     }
