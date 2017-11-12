@@ -142,7 +142,7 @@ fun minDivisor(n: Int): Int {
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
 fun maxDivisor(n: Int): Int {
-    for (i in n / 2 downTo 1) {
+    for (i in n/2 downTo 1) {
         if (n%i == 0) return i
     }
     return n
@@ -178,21 +178,19 @@ fun isCoPrime(m: Int, n: Int): Boolean {
  * Например, для интервала 21..28 21 <= 5*5 <= 28, а для интервала 51..61 квадрата не существует.
  */
 fun squareBetweenExists(m: Int, n: Int): Boolean {
-    var result = false
     var a = m.toDouble()
     val b = n.toDouble()
     return if (n==m) {
-        if( (Math.sqrt(a))%1.0 == 0.0) true else result
+        (Math.sqrt(a))%1.0 == 0.0
     } else {
 
         while (a<b) {
             a+=1.0
             if( (Math.sqrt(a)%1.0) == 0.0) {
-                result = true
-                break
+                return true
             }
         }
-        result
+        return false
     }
 }
 
@@ -280,21 +278,15 @@ fun isPalindrome(n: Int): Boolean = (revert(n) == n)
 fun hasDifferentDigits(n: Int): Boolean {
     var b = n
     var c = digitNumber(n)
-    var result = false
-    return if(c == 0 || c==1) {
-        result
-    } else {
         for(i in 1..(c-1)) {
             if( (b%10) == ((b%100)/10) ) {
                 b /= 10
             }
             else {
-                result = true
-                break
+                return true
             }
         }
-        result
-    }
+        return false
 }
 
 
