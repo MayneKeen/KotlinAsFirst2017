@@ -372,6 +372,7 @@ fun units(n: Int): String {
     }
 
     when {
+        n/10%10==1 && n%10==0 -> result = addWithSpace(result,"дeсять")
         n/10%10==2 -> result = addWithSpace(result,"двадцать")
         n/10%10==3 -> result = addWithSpace(result, "тридцать")
         n/10%10==4 -> result = addWithSpace(result, "сорок")
