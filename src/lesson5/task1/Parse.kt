@@ -78,7 +78,7 @@ fun dateStrToDigit(str: String): String {
             if (list[1] !in month) {
                 throw Exception()
             }
-            else return String.format("%02d.%02d.%4d", list[0].toInt(), month.indexOf(list[1])+1 , list[2].toInt())
+            else return String.format("%02d.%02d.%d", list[0].toInt(), month.indexOf(list[1])+1 , list[2].toInt())
         }
 
         else throw Exception()
@@ -131,7 +131,7 @@ fun dateDigitToStr(digital: String): String {
 fun flattenPhoneNumber(phone: String): String {
     try {
         val regex = """\+?[\d\s\(\)-]*""".toRegex()
-        if(phone matches(regex)) {
+        if(phone.matches(regex) && phone.contains("\\d+".toRegex())) {
             val list = phone.split(" ", "(", ")", "-")
             return list.joinToString("")
         }
@@ -168,7 +168,7 @@ fun bestLongJump(jumps: String): Int {
             }
             return temp
         }
-        
+
         else throw Exception()
     }
 
