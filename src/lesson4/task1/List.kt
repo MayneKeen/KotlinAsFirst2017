@@ -190,12 +190,12 @@ fun polynom(p: List<Double>, x: Double): Double {
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
 fun accumulate(list: MutableList<Double>): MutableList<Double> {
-        if (list.size > 1) {
-            list[1] += list[0]
-            for (i in 2 until list.size) {
-                list[i] += list[i - 1]
-            }
+    if (list.size > 1) {
+        list[1] += list[0]
+        for (i in 2 until list.size) {
+            list[i] += list[i - 1]
         }
+    }
     return list
 }
 
@@ -263,22 +263,19 @@ fun convert(n: Int, base: Int): List<Int> {
  */
 fun intToStr(a: Int): String {
     var m = 'a'
-    var result = ""
-    if (a in 10..35) {
-        for (i in 10 until a) m += 1
-        result += m.toString()
-    } else result = a.toString()
-    return result
+    return if (a in 10..35) {
+        m += a-10
+        m.toString()
+    } else a.toString()
 }
 
 fun convertToString(n: Int, base: Int): String {
     var list = convert(n, base)
-    var result = ""
+    var result = mutableListOf<String>()
     for (element in list) {
-        result += intToStr(element)
+        result.add(intToStr(element))
     }
-    result = result.substring(0,result.length)
-    return result
+    return result.joinToString("")
 }
 
 /**
@@ -307,13 +304,10 @@ fun decimal(digits: List<Int>, base: Int): Int {
  */
 fun charToInt(a: Char): Int {
     var m = 9
-    var result = a.toInt()-48
-    if (a in 'a'..'z') {
-        for (i in 10..a.toInt()-87) m++
-        result = m
-        return result
-    }
-    else return result
+    return if (a in 'a'..'z') {
+        m += (a - 96).toInt()
+        m
+    } else a.toInt()-48
 }
 fun decimalFromString(str: String, base: Int): Int {
     var result = 0
