@@ -171,22 +171,9 @@ fun isCoPrime(m: Int, n: Int): Boolean = (commonNeed(m,n)) == 1
  * то есть, существует ли такое целое k, что m <= k*k <= n.
  * Например, для интервала 21..28 21 <= 5*5 <= 28, а для интервала 51..61 квадрата не существует.
  */
-fun squareBetweenExists(m: Int, n: Int): Boolean {
-    var a = m.toDouble()
-    val b = n.toDouble()
-    return if (n==m) {
-        (Math.sqrt(a))%1.0 == 0.0
-    } else {
+fun sqr(a: Int) = a*a
+fun squareBetweenExists(m: Int, n: Int): Boolean = sqr(Math.sqrt(n.toDouble()).toInt()) in m..n
 
-        while (a<b) {
-            a+=1.0
-            if( (Math.sqrt(a)%1.0) == 0.0) {
-                return true
-            }
-        }
-        return false
-    }
-}
 
 /**
  * Средняя
@@ -272,15 +259,14 @@ fun isPalindrome(n: Int): Boolean = (revert(n) == n)
 fun hasDifferentDigits(n: Int): Boolean {
     var b = n
     var c = digitNumber(n)
-        for(i in 1..(c-1)) {
-            if( (b%10) == ((b%100)/10) ) {
-                b /= 10
-            }
-            else {
-                return true
-            }
+    for (i in 1..(c - 1)) {
+        if ((b % 10) == ((b % 100) / 10)) {
+            b /= 10
+        } else {
+            return true
         }
-        return false
+    }
+    return false
 }
 
 
