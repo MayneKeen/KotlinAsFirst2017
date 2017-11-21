@@ -196,8 +196,9 @@ fun bestHighJump(jumps: String): Int {
             val attempts = jumps.split(" ")
             var temp = -1
 
-            for (element in attempts) {
-                if (element.matches(regexAtt) && element.toInt() > temp)
+            for (i in 0 until attempts.size) {
+                var element = attempts[i]
+                if (element.matches(regexAtt) && element.toInt() > temp && attempts[i+1].contains("""\+""".toRegex()) )
                     temp = element.toInt()
             }
             return temp
@@ -215,7 +216,25 @@ fun bestHighJump(jumps: String): Int {
  * Вернуть значение выражения (6 для примера).
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
-fun plusMinus(expression: String): Int = TODO()
+fun plusMinus(expression: String): Int {
+    var result = 0
+    try {
+        val parts = expression.split(" ")
+        result = parts[0].toInt()
+        for (i in 2 until parts.size step 2) {
+            when {
+                parts[i-1]=="+" -> result += parts[i].toInt()
+                parts[i-1]=="-" -> result -= parts[i].toInt()
+
+                else -> throw Exception()
+            }
+        }
+    }
+    catch(e: Exception){
+        throw IllegalArgumentException()
+    }
+    return result
+}
 
 /**
  * Сложная
@@ -226,7 +245,22 @@ fun plusMinus(expression: String): Int = TODO()
  * Вернуть индекс начала первого повторяющегося слова, или -1, если повторов нет.
  * Пример: "Он пошёл в в школу" => результат 9 (индекс первого 'в')
  */
-fun firstDuplicateIndex(str: String): Int = TODO()
+fun firstDuplicateIndex(str: String): Int {
+    var result = -1
+    val words = str.toLowerCase().split(" ")
+    val listIndex = mutableListOf<Int>(0)
+    for(i in 1 until str.length) {
+        if(str[i]==' ') {
+            listIndex.add(i+1)
+        }
+    }
+    for(i in words.size-1 downTo 1) {
+        if(words[i] == words[i-1]) {
+            result = listIndex[i-1]
+        }
+    }
+    return result
+}
 
 /**
  * Сложная
