@@ -184,17 +184,20 @@ fun bestHighJump(jumps: String): Int {
  */
 fun plusMinus(expression: String): Int {
     var result = 0
-        val parts = expression.split(" ")
-        result = parts[0].toInt()
-        for (i in 2 until parts.size step 2) {
-            when {
-                parts[i-1]=="+" -> result += parts[i].toInt()
-                parts[i-1]=="-" -> result -= parts[i].toInt()
+    val parts = expression.split(" ")
+    val regex = """[\d+\s+-]+""".toRegex()
+    if(expression.equals(regex))
+        throw IllegalArgumentException()
+    result = parts[0].toInt()
+    for (i in 2 until parts.size step 2) {
+        when {
+            parts[i - 1] == "+" -> result += parts[i].toInt()
+            parts[i - 1] == "-" -> result -= parts[i].toInt()
 
-                else -> throw IllegalArgumentException()
-            }
+            else -> throw IllegalArgumentException()
         }
-        return result
+    }
+    return result
 }
 
 /**
