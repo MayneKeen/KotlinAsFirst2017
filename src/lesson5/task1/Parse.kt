@@ -1,6 +1,8 @@
 @file:Suppress("UNUSED_PARAMETER")
 package lesson5.task1
 
+import lesson4.task1.squares
+
 /**
  * Пример
  *
@@ -69,25 +71,16 @@ fun main(args: Array<String>) {
 fun dateStrToDigit(str: String): String {
     val month = listOf("января", "февраля", "марта", "апреля", "мая", "июня", "июля",
             "августа", "сентября", "октября", "ноября", "декабря")
-    try {
-        val regex = """(\d{1,2}) ([а-я]{3,8}) \d+""".toRegex()
+    val regex = """(\d{1,2}) ([а-я]{3,8}) \d+""".toRegex()
 
-        if(str.matches(regex)) {
-            val list = str.split(" ")
-
-            if (list[1] !in month) {
-                throw Exception()
-            }
-            else return String.format("%02d.%02d.%d", list[0].toInt(), month.indexOf(list[1])+1 , list[2].toInt())
-        }
-
-        else throw Exception()
-    }
-
-    catch(e: Exception) {
+    if (!str.matches(regex)) {
         return ""
     }
+    val list = str.split(" ")
 
+    if (list[1] !in month) {
+        return ""
+    } else return String.format("%02d.%02d.%d", list[0].toInt(), month.indexOf(list[1]) + 1, list[2].toInt())
 }
 
 /**
@@ -100,20 +93,12 @@ fun dateStrToDigit(str: String): String {
 fun dateDigitToStr(digital: String): String {
     val month = listOf("января", "февраля", "марта", "апреля", "мая", "июня", "июля",
             "августа", "сентября", "октября", "ноября", "декабря")
-    try {
-        val regex = """\d\d.\d\d.(\d+)""".toRegex()
+    val regex = """\d[1-9].\d[1-9].(\d+)""".toRegex()
 
-        if (digital.matches(regex)) {
-            val list = digital.split(".")
-                return String.format("%d %s %d", list[0].toInt(), month[list[1].toInt()-1], list[2].toInt())
-        }
-
-        else throw Exception()
-    }
-
-    catch(e: Exception) {
+    if (!digital.matches(regex))
         return ""
-    }
+    val list = digital.split(".")
+    return String.format("%d %s %d", list[0].toInt(), month[list[1].toInt() - 1], list[2].toInt())
 }
 
 /**
@@ -129,18 +114,11 @@ fun dateDigitToStr(digital: String): String {
  * При неверном формате вернуть пустую строку
  */
 fun flattenPhoneNumber(phone: String): String {
-    try {
-        val regex = """\+?[\d\s\(\)-]*""".toRegex()
-        if(phone.matches(regex) && phone.contains("\\d+".toRegex())) {
-            val list = phone.split(" ", "(", ")", "-")
-            return list.joinToString("")
-        }
-        else throw Exception()
-    }
-
-    catch (e: Exception) {
+    val regex = """\+?[\d\s\(\)-]*""".toRegex()
+    if (!phone.matches(regex) || !phone.contains("\\d+".toRegex()))
         return ""
-    }
+    val list = phone.split(" ", "(", ")", "-")
+    return list.joinToString("")
 }
 
 /**
@@ -154,27 +132,19 @@ fun flattenPhoneNumber(phone: String): String {
  * При нарушении формата входной строки или при отсутствии в ней чисел, вернуть -1.
  */
 fun bestLongJump(jumps: String): Int {
-    try {
-        val regexAtt = """\d+""".toRegex()
-        val regexStr = """[-%0-9 ]*""".toRegex()
+    val regexAtt = """\d+""".toRegex()
+    val regexStr = """[-%0-9 ]*""".toRegex()
 
-        if(jumps.matches(regexStr) && jumps.contains(regexAtt)) {
-            val attempts = jumps.split(" ")
-            var temp = -1
-
-            for (element in attempts) {
-                if(element.matches(regexAtt) && element.toInt()>temp)
-                    temp = element.toInt()
-            }
-            return temp
-        }
-
-        else throw Exception()
-    }
-
-    catch (e: Exception) {
+    if (!jumps.matches(regexStr) || !jumps.contains(regexAtt))
         return -1
+    val attempts = jumps.split(" ")
+    var temp = -1
+
+    for (element in attempts) {
+        if (element.matches(regexAtt) && element.toInt() > temp)
+            temp = element.toInt()
     }
+    return temp
 }
 
 /**
@@ -188,24 +158,20 @@ fun bestLongJump(jumps: String): Int {
  * При нарушении формата входной строки вернуть -1.
  */
 fun bestHighJump(jumps: String): Int {
-    try {
-        val regexAtt = """\d+""".toRegex()
-        val regexStr = """[-+%0-9 ]*""".toRegex()
+    val regexAtt = """\d+""".toRegex()
+    val regexStr = """[-+%0-9 ]*""".toRegex()
 
-        if (jumps.matches(regexStr) && jumps.contains(regexAtt)) {
-            val attempts = jumps.split(" ")
-            var temp = -1
-
-            for (i in 0 until attempts.size) {
-                var element = attempts[i]
-                if (element.matches(regexAtt) && element.toInt() > temp && attempts[i+1].contains("""\+""".toRegex()) )
-                    temp = element.toInt()
-            }
-            return temp
-        } else throw Exception()
-    } catch (e: Exception) {
+    if (!jumps.matches(regexStr) || !jumps.contains(regexAtt))
         return -1
+    val attempts = jumps.split(" ")
+    var temp = -1
+
+    for (i in 0 until attempts.size) {
+        var element = attempts[i]
+        if (element.matches(regexAtt) && element.toInt() > temp && attempts[i + 1].contains("""\+""".toRegex()))
+            temp = element.toInt()
     }
+    return temp
 }
 /**
  * Сложная
@@ -218,7 +184,6 @@ fun bestHighJump(jumps: String): Int {
  */
 fun plusMinus(expression: String): Int {
     var result = 0
-    try {
         val parts = expression.split(" ")
         result = parts[0].toInt()
         for (i in 2 until parts.size step 2) {
@@ -226,14 +191,10 @@ fun plusMinus(expression: String): Int {
                 parts[i-1]=="+" -> result += parts[i].toInt()
                 parts[i-1]=="-" -> result -= parts[i].toInt()
 
-                else -> throw Exception()
+                else -> throw IllegalArgumentException()
             }
         }
         return result
-    }
-    catch(e: Exception){
-        throw IllegalArgumentException()
-    }
 }
 
 /**
@@ -273,7 +234,21 @@ fun firstDuplicateIndex(str: String): Int {
  * или пустую строку при нарушении формата строки.
  * Все цены должны быть положительными
  */
-fun mostExpensive(description: String): String = TODO()
+fun mostExpensive(description: String): String {
+    val regex = """((([А-Я]|[а-я])+\s+\d+\.\d)+(;\s)?)+""".toRegex()
+    var result = ""
+    if(!description.matches(regex))
+        return result
+    var temp = 0.0
+    var products = description.split(" ", "; ")
+    for(i in 1 until products.size step 2) {
+        if (products[i].toDouble() > temp) {
+            temp = products[i].toDouble()
+            result = products[i-1]
+        }
+    }
+    return result
+}
 
 /**
  * Сложная
