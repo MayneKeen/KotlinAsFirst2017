@@ -166,7 +166,7 @@ fun bestHighJump(jumps: String): Int {
     val attempts = jumps.split(" ")
     var temp = -1
 
-    for (i in 0 until attempts.size) {
+    for (i in 0 until attempts.size step 2) {
         var element = attempts[i]
         if (element.matches(regexAtt) && element.toInt() > temp && attempts[i + 1].contains("""\+""".toRegex()))
             temp = element.toInt()
