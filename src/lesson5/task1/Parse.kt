@@ -229,11 +229,11 @@ fun plusMinus(expression: String): Int {
                 else -> throw Exception()
             }
         }
+        return result
     }
     catch(e: Exception){
         throw IllegalArgumentException()
     }
-    return result
 }
 
 /**
