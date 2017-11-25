@@ -93,11 +93,13 @@ fun dateStrToDigit(str: String): String {
 fun dateDigitToStr(digital: String): String {
     val month = listOf("января", "февраля", "марта", "апреля", "мая", "июня", "июля",
             "августа", "сентября", "октября", "ноября", "декабря")
-    val regex = """\d[1-9].\d[1-9].(\d+)""".toRegex()
+    val regex = """\d\d.\d\d.(\d+)""".toRegex()
 
     if (!digital.matches(regex))
         return ""
     val list = digital.split(".")
+    if(list[0].toInt()==0 || list[1].toInt()==0)
+        return ""
     return String.format("%d %s %d", list[0].toInt(), month[list[1].toInt() - 1], list[2].toInt())
 }
 
@@ -185,7 +187,7 @@ fun bestHighJump(jumps: String): Int {
 fun plusMinus(expression: String): Int {
     var result : Int
     val parts = expression.split(" ")
-    val regex = """[\d+\s[+-]]+""".toRegex()
+    val regex = """[\d+(\s[+-])?]+""".toRegex()
     if(!expression.matches(regex))
         throw IllegalArgumentException()
     result = parts[0].toInt()
