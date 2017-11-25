@@ -183,10 +183,10 @@ fun bestHighJump(jumps: String): Int {
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
 fun plusMinus(expression: String): Int {
-    var result = 0
+    var result : Int
     val parts = expression.split(" ")
-    val regex = """[\d+\s+-]+""".toRegex()
-    if(expression.equals(regex))
+    val regex = """[\d+\s[+-]]+""".toRegex()
+    if(!expression.matches(regex))
         throw IllegalArgumentException()
     result = parts[0].toInt()
     for (i in 2 until parts.size step 2) {
@@ -264,7 +264,27 @@ fun mostExpensive(description: String): String {
  *
  * Вернуть -1, если roman не является корректным римским числом
  */
-fun fromRoman(roman: String): Int = TODO()
+fun fromRoman(roman: String): Int {
+    val listD = listOf(1,5,10,50,100,500,1000)
+    val listR = listOf('I','V','X','L','C','D','M')
+    val regex1 = """[IVXLCDM]+""".toRegex()
+    if (!roman.matches(regex1))
+        return -1
+    var sum = 0
+    var i = roman.length-1
+    var temp: Int
+    while (i >= 0) {
+        temp = listD[listR.indexOf(roman[i])]
+        while ((i >= 1) && (listR.indexOf(roman[i-1]) < listR.indexOf(roman[i]))) {
+            temp -= listD[listR.indexOf(roman[i-1])]
+            i--
+        }
+        sum += temp
+        i--
+    }
+    return sum
+}
+
 
 /**
  * Очень сложная
