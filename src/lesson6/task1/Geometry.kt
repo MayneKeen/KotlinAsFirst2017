@@ -3,6 +3,7 @@ package lesson6.task1
 
 import lesson1.task1.sqr
 import lesson4.task1.center
+import java.lang.Math.*
 
 /**
  * Точка на плоскости
@@ -147,21 +148,32 @@ class Line private constructor(val b: Double, val angle: Double) {
      * Найти точку пересечения с другой линией.
      * Для этого необходимо составить и решить систему из двух уравнений (каждое для своей прямой)
      */
+    val EPS = 1e-12
     fun crossPoint(other: Line): Point {
-        val x: Double
-        val y: Double
-        when {
-            angle == 0.0 -> {
-                y = other.b
-                x = (other.b*Math.cos(angle) - b)/Math.sin(angle)
-            }
+        var x: Double
+        var y: Double
 
+        return when {
+            cos(angle) < EPS -> {
+                x = -b/sin(angle)
+                y = if (cos(other.angle) < EPS) 0.0
+                else (x*sin(other.angle) + other.b)/cos(other.angle)
+                Point(x, y)
+            }
+            sin(angle) < EPS -> {
+                y = b/cos(angle)
+                x = if (sin(other.angle) < EPS) 0.0
+                else (y*cos(other.angle) - other.b)/sin(other.angle)
+                Point(x, y)
+            }
             else -> {
-                x = (other.b/Math.cos(other.angle) - b/Math.cos(angle))/(Math.tan(angle) - Math.tan(other.angle))
-                y = (x*Math.sin(other.angle) + other.b)/Math.cos(other.angle)
+                val m = other.b*cos(angle) - b*cos(other.angle)
+                val n = sin(angle)*cos(other.angle) - sin(other.angle)*cos(angle)
+                x = m/n
+                y = (x*sin(angle) + b)/cos(angle)
+                Point(x, y)
             }
         }
-        return Point(x,y)
     }
 
     override fun equals(other: Any?) = other is Line && angle == other.angle && b == other.b
@@ -181,18 +193,9 @@ class Line private constructor(val b: Double, val angle: Double) {
  * Построить прямую по отрезку
  */
 fun lineBySegment(s: Segment): Line {
-    val angle: Double
-    when {
-        s.begin.x == s.end.x -> angle = Math.PI / 2
-        s.begin.y == s.end.y -> angle = 0.0
-        else -> {
-            val c = Point(s.end.x, s.begin.y)
-            angle = if ((s.begin.x < s.end.x) && (s.begin.y < s.end.y) ||
-                    (s.begin.x > s.end.x) && (s.begin.y < s.end.y))
-                Math.asin((s.end.distance(c)) / (s.begin.distance(s.end)))
-            else Math.PI - Math.asin((s.end.distance(c)) / (s.begin.distance(s.end)))
-        }
-    }
+    val x1 = s.end.x - s.begin.x
+    val y1 = s.end.y - s.begin.y
+    val angle = (atan2(y1, x1) + PI)%PI
     return Line(s.begin, angle)
 }
 
@@ -209,11 +212,12 @@ fun lineByPoints(a: Point, b: Point): Line = lineBySegment(Segment(a,b))
  * Построить серединный перпендикуляр по отрезку или по двум точкам
  */
 fun bisectorByPoints(a: Point, b: Point): Line {
-    val line = lineByPoints(a,b)
-    val k = Point((a.x+b.x)/2, (a.y+b.y)/2)
-    val angle = if (line.angle in Math.PI/2..Math.PI) line.angle - Math.PI/2
-    else line.angle + Math.PI/2
-    return Line(k, angle)
+    val x1 = b.x - a.x
+    val y1 = b.y - a.y
+    val middle = Point(a.x + x1 / 2.0, a.y + y1 / 2)
+    val mBegin = Point(middle.x - y1, middle.y + x1)
+    val mEnd = Point(middle.x + y1, middle.y - x1)
+    return lineByPoints(mBegin, mEnd)
 }
 
 /**
@@ -244,7 +248,7 @@ fun findNearestCirclePair(vararg circles: Circle): Pair<Circle, Circle> {
  */
 fun circleByThreePoints(a: Point, b: Point, c: Point): Circle {
     val line1 = bisectorByPoints(a,b)
-    val line2 = bisectorByPoints(b,c)
+    val line2 = bisectorByPoints(a,c)
     val o = line1.crossPoint(line2)
     return Circle(o, o.distance(a))
 }
