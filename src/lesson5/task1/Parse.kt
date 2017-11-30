@@ -186,10 +186,10 @@ fun bestHighJump(jumps: String): Int {
  */
 fun plusMinus(expression: String): Int {
     var result : Int
-    val parts = expression.split(" ")
     val regex = """[\d+(\s[+-])?]+""".toRegex()
     if(!expression.matches(regex))
         throw IllegalArgumentException()
+    val parts = expression.split(" ")
     result = parts[0].toInt()
     for (i in 2 until parts.size step 2) {
         when {
@@ -240,19 +240,20 @@ fun firstDuplicateIndex(str: String): Int {
  * Все цены должны быть положительными
  */
 fun mostExpensive(description: String): String {
-    val regex = """((([А-Я]|[а-я]|\w+)+\s+\d+\.\d)+(;\s)?)+""".toRegex()
-    var result = ""
-    if(!description.matches(regex))
-        return result
-    var temp = 0.0
-    var products = description.split(" ", "; ")
-    for(i in 1 until products.size step 2) {
-        if (products[i].toDouble() > temp) {
-            temp = products[i].toDouble()
-            result = products[i-1]
-        }
+    val regex = """(.+\s+\d+(.\d*)?(;\s+)?)+""".toRegex()
+    try{
+        if (!description.matches(regex))
+            throw Exception()
+        val list = description.split("; "," ")
+        var res = 1
+        for (i in 3 until list.size step 2)
+            if (list[i].toDouble() > list[res].toDouble())
+                res = i
+        return list[res-1]
     }
-    return result
+    catch(e: Exception){
+        return ""
+    }
 }
 
 /**
