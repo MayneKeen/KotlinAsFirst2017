@@ -193,10 +193,10 @@ fun plusMinus(expression: String): Int {
             when (parts[i-1]){
                 "+" -> result += parts[i].toInt()
                 "-" -> result -= parts[i].toInt()
-                else -> throw Exception()
+                else -> throw IllegalArgumentException()
             }
     }
-    catch(e: Exception){
+    catch(e: NumberFormatException){
         throw IllegalArgumentException()
     }
     return result
@@ -244,7 +244,7 @@ fun mostExpensive(description: String): String {
     val regex = """(.+\s+\d+(.\d*)?(;\s+)?)+""".toRegex()
     try{
         if (!description.matches(regex))
-            throw Exception()
+            throw NumberFormatException()
         val list = description.split("; "," ")
         var res = 1
         for (i in 3 until list.size step 2)
@@ -252,7 +252,7 @@ fun mostExpensive(description: String): String {
                 res = i
         return list[res-1]
     }
-    catch(e: Exception){
+    catch(e: NumberFormatException){
         return ""
     }
 }
