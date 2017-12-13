@@ -6,6 +6,7 @@ import lesson1.task1.sqr
 import lesson3.task1.isPrime
 import lesson3.task1.minDivisor
 import lesson3.task1.maxDivisor
+import java.lang.Math.pow
 
 
 /**
@@ -322,17 +323,17 @@ fun decimalFromString(str: String, base: Int): Int {
  */
 fun roman(n: Int): String {
     var m = n
-    val R = listOf("I","IV","V","IX","X","XL","L","XC","C","CD","D","CM","M")
-    val A = listOf(1,4,5,9,10,40,50,90,100,400,500,900,1000)
-    var result = ""
+    val A = listOf<String>("I","IV","V","IX","X","XL","L","XC","C","CD","D","CM","M",
+            "1","4","5","9","10","40","50","90","100","400","500","900","1000")
+    var result = mutableListOf<String>()
     var i = 12
     while (m > 0) {
-        while (A[i] > m)
+        while (A[i + 13].toInt()>m)
             i--
-        result += R[i]
-        m -= A[i]
+        result.add(A[i])
+        m -= A[i + 13].toInt()
     }
-    return result
+    return result.joinToString("")
 }
 
 /**
@@ -343,129 +344,50 @@ fun roman(n: Int): String {
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
 fun addWithSpace(a: String, b:String): String = if (a.isNotEmpty()) (a + " " + b) else b
-
-fun units(n: Int): String {
-    var result = ""
-
-    when {
-        n/100==1 -> result = addWithSpace(result, "сто")
-        n/100==2 -> result = addWithSpace(result, "двести")
-        n/100==3 -> result = addWithSpace(result, "триста")
-        n/100==4 -> result = addWithSpace(result, "четыреста")
-        n/100==5 -> result = addWithSpace(result, "пятьсот")
-        n/100==6 -> result = addWithSpace(result, "шестьсот")
-        n/100==7 -> result = addWithSpace(result, "семьсот")
-        n/100==8 -> result = addWithSpace(result, "восемьсот")
-        n/100==9 -> result = addWithSpace(result, "девятьсот")
-    }
-
-    when {
-        n/10%10==1 && n%10==0 -> result = addWithSpace(result,"десять")
-        n/10%10==2 -> result = addWithSpace(result,"двадцать")
-        n/10%10==3 -> result = addWithSpace(result, "тридцать")
-        n/10%10==4 -> result = addWithSpace(result, "сорок")
-        n/10%10==5 -> result = addWithSpace(result, "пятьдесят")
-        n/10%10==6 -> result = addWithSpace(result, "шестьдесят")
-        n/10%10==7 -> result = addWithSpace(result, "семьдесят")
-        n/10%10==8 -> result = addWithSpace(result, "восемьдесят")
-        n/10%10==9 -> result = addWithSpace(result, "девяносто")
-    }
-
-    when {
-        n%100==11 -> result = addWithSpace(result, "одиннадцать")
-        n%100==12 -> result = addWithSpace(result, "двенадцать")
-        n%100==13 -> result = addWithSpace(result, "тринадцать")
-        n%100==14 -> result = addWithSpace(result, "четырнадцать")
-        n%100==15 -> result = addWithSpace(result, "пятнадцать")
-        n%100==16 -> result = addWithSpace(result, "шестнадцать")
-        n%100==17 -> result = addWithSpace(result, "семнадцать")
-        n%100==18 -> result = addWithSpace(result, "восемнадцать")
-        n%100==19 -> result = addWithSpace(result, "девятнадцать")
-
-        n%10==1 -> result = addWithSpace(result, "один")
-        n%10==2 -> result = addWithSpace(result, "два")
-        n%10==3 -> result = addWithSpace(result, "три")
-        n%10==4 -> result = addWithSpace(result, "четыре")
-        n%10==5 -> result = addWithSpace(result, "пять")
-        n%10==6 -> result = addWithSpace(result, "шесть")
-        n%10==7 -> result = addWithSpace(result, "семь")
-        n%10==8 -> result = addWithSpace(result, "восемь")
-        n%10==9 -> result = addWithSpace(result, "девять")
-    }
-    return result
-}
-
-fun thousands(n: Int): String {
-    var result = ""
-    when {
-        n/100==1 -> result = addWithSpace(result, "сто")
-        n/100==2 -> result = addWithSpace(result, "двести")
-        n/100==3 -> result = addWithSpace(result, "триста")
-        n/100==4 -> result = addWithSpace(result, "четыреста")
-        n/100==5 -> result = addWithSpace(result, "пятьсот")
-        n/100==6 -> result = addWithSpace(result, "шестьсот")
-        n/100==7 -> result = addWithSpace(result, "семьсот")
-        n/100==8 -> result = addWithSpace(result, "восемьсот")
-        n/100==9 -> result = addWithSpace(result, "девятьсот")
-    }
-
-    when {
-        n/10%10==1 && n%10==0 -> result = addWithSpace(result,"десять")
-        n/10%10==2 -> result = addWithSpace(result, "двадцать")
-        n/10%10==3 -> result = addWithSpace(result, "тридцать")
-        n/10%10==4 -> result = addWithSpace(result, "сорок")
-        n/10%10==5 -> result = addWithSpace(result, "пятьдесят")
-        n/10%10==6 -> result = addWithSpace(result, "шестьдесят")
-        n/10%10==7 -> result = addWithSpace(result, "семьдесят")
-        n/10%10==8 -> result = addWithSpace(result, "восемьдесят")
-        n/10%10==9 -> result = addWithSpace(result, "девяносто")
-    }
-
-    when {
-        n%100==11 -> result = addWithSpace(result, "одиннадцать")
-        n%100==12 -> result = addWithSpace(result, "двенадцать")
-        n%100==13 -> result = addWithSpace(result, "тринадцать")
-        n%100==14 -> result = addWithSpace(result, "четырнадцать")
-        n%100==15 -> result = addWithSpace(result, "пятнадцать")
-        n%100==16 -> result = addWithSpace(result, "шестнадцать")
-        n%100==17 -> result = addWithSpace(result, "семнадцать")
-        n%100==18 -> result = addWithSpace(result, "восемнадцать")
-        n%100==19 -> result = addWithSpace(result, "девятнадцать")
-
-        n%10==1 -> result = addWithSpace(result, "одна")
-        n%10==2 -> result = addWithSpace(result, "две")
-        n%10==3 -> result = addWithSpace(result, "три")
-        n%10==4 -> result = addWithSpace(result, "четыре")
-        n%10==5 -> result = addWithSpace(result, "пять")
-        n%10==6 -> result = addWithSpace(result, "шесть")
-        n%10==7 -> result = addWithSpace(result, "семь")
-        n%10==8 -> result = addWithSpace(result, "восемь")
-        n%10==9 -> result = addWithSpace(result, "девять")
-    }
-
-    return if (n/10%10 != 1) {
-        when {
-            n%10 == 1 -> addWithSpace(result, "тысяча")
-            n%10 in 2..4 -> addWithSpace(result, "тысячи")
-            else -> addWithSpace(result, "тысяч")
-        }
-    } else {
-        addWithSpace(result, "тысяч")
-    }
-
-}
-
 fun russian(n: Int): String {
-    var list = mutableListOf<Int>()
-    if(n/1000>0) {
-        list.add(n/1000%1000)
-        list.add(n%1000)
-    }
-    else list.add(n%1000)
+    var result = mutableListOf<String>()
 
-    return when {
-        list.size == 1 -> units(list[0])
-        list[1] == 0 -> thousands(list[0])
-        else -> thousands(list[0]) + " " + units(list[1])
+    val digit = listOf("", "один", "два", "три", "четыре", "пять", "шесть", "семь", "восемь", "девять")
+    val thousandDigit = listOf("", "одна", "две", "три", "четыре", "пять",
+            "шесть", "семь", "восемь", "девять")
+    val dozen = listOf("", "десять", "двадцать", "тридцать", "сорок", "пятьдесят", "шестьдесят", "семьдесят",
+            "восемьдесят", "девяносто")
+    val dozenPl = listOf("десять", "одиннадцать", "двенадцать", "тринадцать", "четырнадцать", "пятнадцать",
+            "шестнадцать", "семнадцать", "восемнадцать", "девятнадцать")
+    val hundred = listOf("", "сто", "двести", "триста", "четыреста", "пятьсот", "шестьсот", "семьсот",
+            "восемьсот", "девятьсот")
+    val thousandType = listOf("тысяча", "тысячи", "тысяч")
+
+    val units = listOf(n%10, n/10%10, n/100%10, n/1000%10, n/10000%10, n/100000%10)
+
+    if (units[5] != 0)
+        result.add(hundred[units[5]])
+    if (units[4] != 0)
+        if (units[4] == 1) {
+            result.add(dozenPl[units[3]])
+        } else {
+            result.add(dozen[units[4]])
+            if (units[3] != 0)
+                result.add(thousandDigit[units[3]])
+        }
+    else if (units[3] != 0) result.add(thousandDigit[units[3]])
+    if (units[5] != 0 || units[4] != 0 || units[3] != 0) {
+        if (units[3] == 1 && units[4] != 1) result.add(thousandType[0])
+        else
+            if (units[3] in 1..4 && units[4] != 1) result.add(thousandType[1])
+            else
+                result.add(thousandType[2])
     }
+    if (units[2] != 0)
+        result.add(hundred[units[2]])
+    if (units[1] != 0)
+        if (units[1] == 1)
+            result.add(dozenPl[units[0]])
+        else {
+            result.add(dozen[units[1]])
+        }
+    if (units[0] != 0 && units[1] != 1)
+        result.add(digit[units[0]])
+
+    return result.joinToString(" ")
 }
