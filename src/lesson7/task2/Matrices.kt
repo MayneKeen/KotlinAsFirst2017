@@ -59,7 +59,29 @@ operator fun Matrix<Int>.plus(other: Matrix<Int>): Matrix<Int> {
  * 10 11 12  5
  *  9  8  7  6
  */
-fun generateSpiral(height: Int, width: Int): Matrix<Int> = TODO()
+fun generateSpiral(height: Int, width: Int): Matrix<Int>  {
+    val matrix = createMatrix(height, width, height*width)
+    var st = 1
+    var number = st
+    while (number <= height*width) {
+        for (i in st - 1 until width - (st - 1)) {
+            matrix[st - 1, i] = number++
+        }
+        for (j in st until height - (st - 1)) {
+            matrix[j, width - st] = number++
+        }
+        if (number >= height*width) return matrix
+        for (i in width - (st + 1) downTo st - 1) {
+            matrix[height - st, i] = number++
+        }
+        for (j in height - st - 1 downTo st) {
+            matrix[j, st - 1] = number++
+        }
+        st++
+    }
+    return matrix
+}
+
 
 /**
  * Сложная
@@ -75,7 +97,31 @@ fun generateSpiral(height: Int, width: Int): Matrix<Int> = TODO()
  *  1  2  2  2  2  1
  *  1  1  1  1  1  1
  */
-fun generateRectangles(height: Int, width: Int): Matrix<Int> = TODO()
+fun generateRectangles(height: Int, width: Int): Matrix<Int> {
+    var k = 1
+    var m = 0
+    val matrix = createMatrix(height, width, height * width)
+    while (m < height*width) {
+        for (i in k until height - (k - 1)) {
+            matrix[i, width - k] = k
+            m++
+        }
+        for (j in (k - 1) until width - (k - 1)) {
+            matrix[k - 1, j] = k
+            m++
+        }
+        for (i in height - (k + 1) downTo k) {
+            matrix[i, k - 1] = k
+            m++
+        }
+        for (j in width - (k + 1) downTo (k - 1)) {
+            matrix[height - k, j] = k
+            m++
+        }
+        k++
+    }
+    return matrix
+}
 
 /**
  * Сложная
@@ -103,7 +149,17 @@ fun generateSnake(height: Int, width: Int): Matrix<Int> = TODO()
  * 4 5 6      8 5 2
  * 7 8 9      9 6 3
  */
-fun <E> rotate(matrix: Matrix<E>): Matrix<E> = TODO()
+fun <E> rotate(matrix: Matrix<E>): Matrix<E> =
+        if (matrix.height != matrix.width) throw IllegalAccessException()
+        else {
+            val border = matrix.height
+            val result = createMatrix(border, border, matrix[0, 0])
+            for (i in 0 until border) {
+                for (j in 0 until border)
+                    result[i, j] = matrix[border - (j + 1), i]
+            }
+            result
+        }
 
 /**
  * Сложная
