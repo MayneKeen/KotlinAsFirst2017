@@ -174,7 +174,21 @@ fun <E> rotate(matrix: Matrix<E>): Matrix<E> =
  * 1 2 3
  * 3 1 2
  */
-fun isLatinSquare(matrix: Matrix<Int>): Boolean = TODO()
+fun isLatinLine(matrix: Matrix<Int>): Boolean {
+    val h = matrix.height
+    for (i in 0 until h) {
+        val line = Array(h, {0})
+        for (j in 0 until h) {
+            line[j] = matrix[i, j]
+        }
+        val list = line.distinct()
+        if (list.min() != 1 || list.max() != h || list.size != h) return false
+    }
+    return true
+}
+
+fun isLatinSquare(matrix: Matrix<Int>): Boolean = matrix.width==matrix.height && isLatinLine(matrix) &&
+        isLatinLine(rotate(matrix))
 
 /**
  * Средняя
@@ -231,7 +245,15 @@ data class Holes(val rows: List<Int>, val columns: List<Int>)
  *
  * К примеру, центральный элемент 12 = 1 + 2 + 4 + 5, элемент в левом нижнем углу 12 = 1 + 4 + 7 и так далее.
  */
-fun sumSubMatrix(matrix: Matrix<Int>): Matrix<Int> = TODO()
+fun sumSubMatrix(matrix: Matrix<Int>): Matrix<Int> {
+    var sumSubMatrix = createMatrix(matrix.height, matrix.width, 0)
+    for (i in 0 until matrix.height)
+        for (j in 0 until matrix.width)
+            for (m in 0..i)
+                for (n in 0..j)
+                    sumSubMatrix[i, j] += matrix[m, n]
+    return sumSubMatrix
+}
 
 /**
  * Сложная
