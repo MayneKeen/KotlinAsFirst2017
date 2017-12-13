@@ -343,7 +343,6 @@ fun roman(n: Int): String {
  * Например, 375 = "триста семьдесят пять",
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
-fun addWithSpace(a: String, b:String): String = if (a.isNotEmpty()) (a + " " + b) else b
 fun russian(n: Int): String {
     var result = mutableListOf<String>()
 
